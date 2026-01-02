@@ -58,11 +58,12 @@ care_cliniv_v2/
 ├── .htaccess                       # Optional security / URL rewrite
 └── README.md                        # Project documentation
 
-## ⚙️ Requirements
+# ⚙️ Requirements
 
-- PHP 8
-- MySQL 
-- Apache
+**PHP 8**
+**MySQL** 
+**Apache**
+
 
 
 
