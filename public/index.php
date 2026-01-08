@@ -2,3 +2,4 @@
 require_once __DIR__ . '/../app/Controllers/AuthController.php';
 
 AuthController::check();
+AuthController::checkRole('admin');
