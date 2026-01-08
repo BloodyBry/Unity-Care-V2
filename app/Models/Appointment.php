@@ -52,6 +52,7 @@ class Appointment extends BaseModel {
         return $stmt->execute();
     }
 
+    
     public function getAll() {
         $result = $this->db->query("SELECT * FROM appointments");
         return $result->fetch_all(MYSQLI_ASSOC);

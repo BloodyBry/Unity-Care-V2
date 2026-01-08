@@ -1,36 +1,46 @@
 <?php
-
-require_once __DIR__ . '/../Core/BaseModel.php';
-
-abstract class User extends BaseModel {
+abstract class User {
     protected $id;
-    protected $username;
     protected $email;
-    protected $password; 
+    protected $username;
+    protected $password;
+    protected $role;
 
-    public function __construct($table) {
-        parent::__construct($table);
+    public function __construct($id = null, $email = null, $username = null, $password = null, $role = null) {
+        $this->id = $id;
+        $this->email = $email;
+        $this->username = $username;
+        $this->password = $password;
+        $this->role = $role;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
     }
 
     public function getId() {
         return $this->id;
     }
 
-    public function getUsername() {
-        return $this->username;
-    }
-
     public function getEmail() {
         return $this->email;
     }
 
-    public function setPassword($password) {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+    public function getUsername() {
+        return $this->username;
     }
 
-    public function verifyPassword($password) {
-        return password_verify($password, $this->password);
+    public function getRole() {
+        return $this->role;
     }
 
-    abstract public function getRole();
+    abstract public function login($db, $email, $password);
 }
