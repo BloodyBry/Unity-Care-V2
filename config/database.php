@@ -1,12 +1,26 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "care_clinic_v2";
+class Database
+{
+    private static $host = "localhost";
+    private static $db_name = "care_clinic_v2";
+    private static $username = "root";
+    private static $password = "";
+    private static $conn = null;
 
-$conn = new mysqli($servername, $username, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    public static function getConnection()
+    {
+        if (self::$conn === null) {
+            try {
+                self::$conn = new PDO(
+                    "mysql:host=" . self::$host . ";dbname=" . self::$db_name,
+                    self::$username,
+                    self::$password
+                );
+                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Database connection failed: " . $e->getMessage());
+            }
+        }
+        return self::$conn;
+    }
 }
-?>

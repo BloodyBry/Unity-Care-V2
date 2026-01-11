@@ -1,16 +1,33 @@
 <?php
-require_once __DIR__ . '/../config/database.php';          
-require_once __DIR__ . '/../app/Controllers/AuthController.php';
+require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/../app/Core/Session.php";
+require_once __DIR__ . "/../app/repositories/UserRepository.php";
 
-$auth = new AuthController($conn);
+Session::start();
+
+if (Session::isLoggedIn()) {
+    header("Location: index.php");
+    exit;
+}
 
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-    $error = $auth->login($email, $password); 
+    $db = (new Database())->getConnection();
+    $userRepo = new UserRepository($db);
+    $user = $userRepo->findByEmail($email);
+
+    if ($user && password_verify($password, $user->password)) {
+        Session::set('user_id', $user->id);
+        Session::set('role', $user->role);
+        header("Location: index.php");
+        exit;
+    } else {
+        $error = "Email or password incorrect.";
+    }
 }
 ?>
 
@@ -18,24 +35,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Care Cliniv</title>
-    <link rel="stylesheet" href="assets/css/style.css"> 
+    <title>Login | Unity Care Clinic</title>
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 <body>
-    <h2>Login</h2>
 
-    <?php if(!empty($error)) : ?>
-        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
-    <?php endif; ?>
+<div class="login-page">
 
-    <form action="login.php" method="POST">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+    <div class="login-card">
+        <div class="login-header">
+            <h1>Unity Care Clinic</h1>
+            <p>Admin & Staff Login</p>
+        </div>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
+        <?php if ($error): ?>
+            <div class="error-box">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
 
-        <button type="submit">Login</button>
-    </form>
+        <form method="post" class="login-form">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Your email here" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-login">
+                Login
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <span>© <?= date("Y") ?> Unity Care Clinic</span>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>
