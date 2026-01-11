@@ -62,6 +62,7 @@ if (!Session::isLoggedIn() || Session::get('role') !== 'admin') {
     </div>
 </div>
 
+
 <footer class="dashboard-footer">
     <div class="container">
         &copy; <?= date("Y") ?> Unity Care Clinic. All rights reserved.
@@ -69,6 +70,5 @@ if (!Session::isLoggedIn() || Session::get('role') !== 'admin') {
 </footer>
 
 </body>
-
 
 </html>
