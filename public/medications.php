@@ -13,28 +13,24 @@ if (!Session::isLoggedIn() || Session::get('role') !== 'admin') {
 $db = (new Database())->getConnection();
 $repo = new MedicationRepository($db);
 
-/* ADD */
 if (isset($_POST['add'])) {
     $repo->create($_POST['name'], $_POST['description']);
     header("Location: medications.php");
     exit;
 }
 
-/* UPDATE */
 if (isset($_POST['update'])) {
     $repo->update($_POST['id'], $_POST['name'], $_POST['description']);
     header("Location: medications.php");
     exit;
 }
 
-/* DELETE */
 if (isset($_GET['delete'])) {
     $repo->delete($_GET['delete']);
     header("Location: medications.php");
     exit;
 }
 
-/* EDIT MODE */
 $editMedication = null;
 if (isset($_GET['edit'])) {
     $editMedication = $repo->find($_GET['edit']);
@@ -69,7 +65,6 @@ $medications = $repo->all();
         <a href="index.php" class="back">← Back to dashboard</a>
     </div>
 
-    <!-- ADD / EDIT FORM -->
     <div class="card">
         <h2><?= $editMedication ? "Edit Medication" : "Add Medication" ?></h2>
 
@@ -95,7 +90,6 @@ $medications = $repo->all();
         </form>
     </div>
 
-    <!-- TABLE -->
     <div class="card table-card">
         <h2>Medication List</h2>
 

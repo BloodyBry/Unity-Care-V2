@@ -11,7 +11,6 @@ body {
     padding: 0 20px;
 }
 
-/* Header */
 .header {
     width: 100%;
     background-color: #002b5c;
@@ -49,7 +48,6 @@ body {
     background-color: #c0392b;
 }
 
-/* Top bar */
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -61,7 +59,6 @@ body {
     color: #002b5c;
 }
 
-/* Buttons */
 .btn {
     background: #3498db;
     color: white;
@@ -80,7 +77,6 @@ body {
     background: #7f8c8d;
 }
 
-/* Cards */
 .card {
     background: white;
     padding: 20px;
@@ -94,7 +90,6 @@ body {
     color: #002b5c;
 }
 
-/* Form */
 form input {
     width: 100%;
     padding: 10px;
@@ -103,7 +98,7 @@ form input {
     border: 1px solid #ccc;
 }
 
-/* Table */
+
 .table-wrapper {
     overflow-x: auto;
 }

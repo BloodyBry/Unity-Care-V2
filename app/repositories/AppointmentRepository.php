@@ -10,7 +10,6 @@ class AppointmentRepository
         $this->conn = Database::getConnection();
     }
 
-    // GET ALL
     public function getAll()
     {
         $stmt = $this->conn->prepare("SELECT * FROM appointments ORDER BY appointment_date DESC, appointment_time DESC");
@@ -18,7 +17,6 @@ class AppointmentRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // GET BY ID
     public function getById($id)
     {
         $stmt = $this->conn->prepare("SELECT * FROM appointments WHERE id = :id");
@@ -27,7 +25,6 @@ class AppointmentRepository
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // CREATE
     public function create($patient_id, $doctor_id, $date, $time, $reason)
     {
         $stmt = $this->conn->prepare("
@@ -42,7 +39,6 @@ class AppointmentRepository
         $stmt->execute();
     }
 
-    // UPDATE
     public function update($id, $patient_id, $doctor_id, $date, $time, $reason, $status)
     {
         $stmt = $this->conn->prepare("
@@ -65,7 +61,6 @@ class AppointmentRepository
         $stmt->execute();
     }
 
-    // DELETE
     public function delete($id)
     {
         $stmt = $this->conn->prepare("DELETE FROM appointments WHERE id = :id");

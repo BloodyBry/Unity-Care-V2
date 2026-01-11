@@ -26,14 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
     exit;
 }
 
-/* DELETE */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
     $repo->delete($_POST['id']);
     header("Location: prescriptions.php");
     exit;
 }
 
-/* EDIT MODE */
 $edit = null;
 if (isset($_GET['edit'])) {
     $edit = $repo->find($_GET['edit']);
@@ -65,14 +63,13 @@ $medications = $medRepo->all();
 
 <div class="container">
 
-    <!-- TOP BAR -->
     <div class="top-bar">
         <h1>Prescriptions</h1>
         <!-- <a href="index.php" class="btn secondary">← Dashboard</a> -->
         <a href="index.php" class="back">← Back to dashboard</a>
     </div>
 
-    <!-- EDIT FORM (same as appointments) -->
+
     <?php if ($edit): ?>
         <div class="card">
             <h2>Edit Prescription</h2>
@@ -107,7 +104,7 @@ $medications = $medRepo->all();
         </div>
     <?php endif; ?>
 
-    <!-- TABLE -->
+
     <div class="card table-card">
         <h2>All Prescriptions</h2>
 
